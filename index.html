@@ -30,11 +30,9 @@
             
             if (!ipRegex.test(ip)) {
                 document.getElementById('ipInfo').textContent = 'Invalid IP Address';
-                return;
             
             } else {
                 document.getElementById('ipInfo').textContent = 'Fetching IP Info...';
-            }
             const ipInfo = await fetch('https://ipinfo.io/' + ip + '/geo').then(res => res.json());
             const zipInfo = await fetch('https://api.zippopotam.us/us/' + ipInfo.postal).then(res => res.json());
 
@@ -47,6 +45,7 @@
             }).addTo(map);
             L.marker([parseFloat(loc[0]), parseFloat(loc[1])]).addTo(map);
         }
+    }
     </script>
 </body>
 </html>
