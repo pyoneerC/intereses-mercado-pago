@@ -1,0 +1,52 @@
+<!-- this is a html pae for getting information about ips with several rest apis -->
+
+<!-- https://api.ipify.org?format=json gets current ip adress if user dont enter nothing in the input box -->
+<!-- https://ipinfo.io/161.185.160.93/geo ip info: company, info, carrier name -->
+<!-- zippopotamus for getting zip info https://api.zippopotam.us/us/33162 -->
+<!-- a google map will apear with the coordinates ipinfo gives  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IP Information</title>
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+    <h2>IP Information</h2>
+    <input id="ip" type="text" placeholder="161.185.160.93" required>
+    <button onclick="getIpInfo()">Get IP Info</button>
+    <div id="ipInfo"></div>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+
+    <script>
+        async function getIpInfo() {
+            let ip = document.getElementById('ip').value;
+            if(ip === '') {
+                ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(data => data.ip);
+            }
+
+            const ipRegex = /^((25[0-5]|(2[0-4]|1\d|[1-9]?)\d)\.?\b){4}$/;            
+            
+            if (!ipRegex.test(ip)) {
+                document.getElementById('ipInfo').textContent = 'Invalid IP Address';
+                return;
+            
+            } else {
+                document.getElementById('ipInfo').textContent = 'Fetching IP Info...';
+            }
+            const ipInfo = await fetch('https://ipinfo.io/' + ip + '/geo').then(res => res.json());
+            const zipInfo = await fetch('https://api.zippopotam.us/us/' + ipInfo.postal).then(res => res.json());
+
+            document.getElementById('ipInfo').textContent = JSON.stringify(ipInfo, null, 2) + '\n' + JSON.stringify(zipInfo, null, 2);
+
+            const loc = ipInfo.loc.split(',');
+            const map = L.map('map').setView([parseFloat(loc[0]), parseFloat(loc[1])], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
+            L.marker([parseFloat(loc[0]), parseFloat(loc[1])]).addTo(map);
+        }
+    </script>
+</body>
+</html>
