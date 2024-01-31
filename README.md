@@ -1,4 +1,4 @@
-# Calculadora de Intereses de Mercado Pago
+# Calculadora de Rendimientos de Mercado Pago
 
 Este proyecto es una calculadora web sencilla que te permite calcular los intereses de tus inversiones con Mercado Pago. Está diseñada para ser fácil de usar y proporciona un resultado claro y conciso de tus posibles ganancias.
 
