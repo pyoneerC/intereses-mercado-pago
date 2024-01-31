@@ -88,7 +88,7 @@
       <br />
 
 
-      <input type="submit" value="Calcular" />
+      <input type="submit" value="Calcular" class="calcular"/>
     </form>
 
     <div id="result" class="output-text"></div>
@@ -97,7 +97,7 @@
 
     <div id="result"></div>
 
-    <footer>
+    <footer class="footer">
       <small
         >La información proporcionada es solo una estimación y no debe tomarse
         como una recomendación de inversión. </small
@@ -324,22 +324,22 @@
           const gananciaAnualDolar =    gananciaAnual / precioDolar;
 
           if (ganancia > 0 && gananciaDolar > 0) {
-            output += `<span style="color:green;">La ganancia diaria sería ~${gananciaDiaria.toFixed(
+            output += `<span style="color:blue;">La ganancia diaria sería ~${gananciaDiaria.toFixed(
               2
             )} ARS</span>, lo que equivale a ${gananciaDiariaDolar.toFixed(
               2
             )} USD.<br>`;
-            output += `<span style="color:green;">La ganancia en 1 semana sería ~${gananciaSemanal.toFixed(
+            output += `<span style="color:blue;">La ganancia en 1 semana sería ~${gananciaSemanal.toFixed(
               2
             )} ARS</span>, lo que equivale a ${gananciaSemanalDolar.toFixed(
               2
             )} USD.<br>`;
-            output += `<span style="color:green;">La ganancia en 1 mes sería ~${gananciaMensual.toFixed(
+            output += `<span style="color:blue;">La ganancia en 1 mes sería ~${gananciaMensual.toFixed(
               2
             )} ARS</span>, lo que equivale a ${gananciaMensualDolar.toFixed(
               2
             )} USD.<br>`;
-            output += `<span style="color:green;">La ganancia en 1 año sería ~${gananciaAnual.toFixed(
+            output += `<span style="color:blue;">La ganancia en 1 año sería ~${gananciaAnual.toFixed(
               2
             )} ARS</span>, lo que equivale a ${gananciaAnualDolar.toFixed(
               2
