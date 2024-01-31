@@ -28,10 +28,6 @@ Damos la bienvenida a las contribuciones a este proyecto. Si tienes una solicitu
 
 La información proporcionada por esta calculadora es solo una estimación y no debe tomarse como asesoramiento de inversión. Por favor, consulta con un asesor financiero antes de tomar cualquier decisión de inversión.
 
-## Licencia
-
-Este proyecto está licenciado bajo los términos de la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más detalles.
-
 ## Derechos de autor
 
 Derechos de autor (C) 2024 pyoneerC - Todos los derechos reservados.
