@@ -1,51 +1,137 @@
-<!-- this is a html pae for getting information about ips with several rest apis -->
-
-<!-- https://api.ipify.org?format=json gets current ip adress if user dont enter nothing in the input box -->
-<!-- https://ipinfo.io/161.185.160.93/geo ip info: company, info, carrier name -->
-<!-- zippopotamus for getting zip info https://api.zippopotam.us/us/33162 -->
-<!-- a google map will apear with the coordinates ipinfo gives  -->
-
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>IP Information</title>
-    <link rel="stylesheet" href="style.css" />
-
+  <meta charset="UTF-8">
+  <title>Calculadora de Intereses Mercado Pago</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h2>IP Information</h2>
-    <input id="ip" type="text" placeholder="161.185.160.93" required>
-    <button onclick="getIpInfo()">Get IP Info</button>
-    <div id="ipInfo"></div>
-    <div id="map" style="height: 400px; width: 100%;"></div>
+  <form id="investmentForm">
+    <label for="dineroInvertido">ARS Invertidos:</label>
+    <input type="number" id="dineroInvertido" name="dineroInvertido" step="any" required>
 
-    <script>
-        async function getIpInfo() {
-            let ip = document.getElementById('ip').value;
-            if(ip === '') {
-                ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(data => data.ip);
-            }
+    <br>
 
-            const ipRegex = /^((25[0-5]|(2[0-4]|1\d|[1-9]?)\d)\.?\b){4}$/;            
-            
-            if (!ipRegex.test(ip)) {
-                document.getElementById('ipInfo').textContent = 'Invalid IP Address';
-            
-            } else {
-                document.getElementById('ipInfo').textContent = 'Fetching IP Info...';
-            const ipInfo = await fetch('https://ipinfo.io/' + ip + '/geo').then(res => res.json());
-            const zipInfo = await fetch('https://api.zippopotam.us/us/' + ipInfo.postal).then(res => res.json());
+    <label for="rendimientoAnual">Rendimiento Anual (%):</label>
+    <input type="number" id="rendimientoAnual" name="rendimientoAnual" value="0.81" step="any" required>
 
-            document.getElementById('ipInfo').textContent = JSON.stringify(ipInfo, null, 2) + '\n' + JSON.stringify(zipInfo, null, 2);
+    <br>
 
-            const loc = ipInfo.loc.split(',');
-            const map = L.map('map').setView([parseFloat(loc[0]), parseFloat(loc[1])], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-            }).addTo(map);
-            L.marker([parseFloat(loc[0]), parseFloat(loc[1])]).addTo(map);
+    <label for="precioDolar">Precio USD:</label>
+    <input type="number" id="precioDolar" name="precioDolar" value="1215" step="any" required>
+
+    <br><br>
+
+    <input type="submit" value="Calculate">
+  </form>
+
+  <br>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('investmentForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+    const productos = [
+    { nombre: 'Leche 1L', precio: 814 },
+    { nombre: 'Coca de dos litros y medio', precio: 2423.47 },
+    { nombre: 'Bolsas de basura x 30', precio: 644.00 },
+    { nombre: 'Nueces peladas 100 grs', precio: 1010.00 },
+    { nombre: 'Discos para empanadas sin TACC 12 unid.', precio: 1143.00 },
+    { nombre: 'Pan 650 grs', precio: 1995.00 },
+    { nombre: 'Pan rallado sin gluten 500 grs', precio: 1270.00 },
+    { nombre: 'Biscuits 150 grs', precio: 1090.00 },
+    { nombre: 'Pasta frola.', precio: 1450.00 },
+    { nombre: 'Alfajor de maizena 6 unidades.', precio: 1815.00 },
+    { nombre: 'Pañal Desc Premium Care PCare 34 unidades.', precio: 21880.00 },
+    { nombre: 'Alimento para gatos (Pescado 1000 grs)', precio: 2082.00 },
+    { nombre: 'Alimento para gatos (Mix 10 KG)', precio: 17017.00 },
+    { nombre: 'Alimento para gatos (Carne, Pescado y Arroz 1000 grs)', precio: 1797.00 },
+    { nombre: 'Alimento para perros (Pedigree Adulto CPC E2 1500 grs)', precio: 3025.00 },
+    { nombre: 'Alimento para mascotas (Carne, Carne, Cereales y Arroz 8 KG)', precio: 8872.00 },
+    { nombre: 'Alimento para gatos (Pescado prebiótico 3 KG)', precio: 5377.00 },
+    { nombre: 'Repuesto Escolar Rivadavia CD 48 hojas', precio: 1915.00 },
+    { nombre: 'Bolígrafo BIC Cristal Dura+ Negro 3 unid.', precio: 1909.00 },
+    { nombre: 'Lápiz grafito BIC Evolution con goma 4 unid.', precio: 2138.00 },
+    { nombre: 'Budín Arcor sin frutas 215 grs', precio: 1240.00 },
+    { nombre: 'Budín France con frutas 150 grs', precio: 501.00 },
+    { nombre: 'Budín celiaco Smams Vainilla 250 grs', precio: 2980.00 },
+    { nombre: 'Budín celiaco Smams Vainilla con chip 200 grs', precio: 2980.00 },
+    { nombre: 'Budín celiaco Smams Marmolado 250 grs', precio: 2980.00 },
+    { nombre: 'Budín marmolado 1 unid.', precio: 1270.00 },
+    { nombre: 'Arroz L. Fino Noble 5/0 500 grs', precio: 1100.00 },
+    { nombre: 'Arroz L. Fino Noble 5/0 1000 grs', precio: 2076.00 },
+    { nombre: 'Arroz L. Fino Tio Carlos 00000 500 grs', precio: 813.00 },
+    { nombre: 'Arroz Parb. Lucchetti bolsa 1000 grs', precio: 3163.00 },
+    { nombre: 'Arroz Fortuna Tio Carlos 00000 500 grs', precio: 1283.00 },
+    { nombre: 'Caldos en polvo Alicante Sabor 4 Quesos 4 unid.', precio: 1040.00 },
+    { nombre: 'Caldos en polvo Alicante Sabor Crema/Verde 4 unid.', precio: 1040.00 },
+    { nombre: 'Caldos en polvo Alicante Sabor Carne ST 4 unid.', precio: 931.00 },
+    { nombre: 'Caldos en polvo Alicante Sabor Verdura R/S 4 unid.', precio: 931.00 },
+    { nombre: 'Caldos en polvo Alicante Sabor Gallina ST 4 unid.', precio: 931.00 },
+    { nombre: 'Caldos en polvo Alicante Sabor Verdura ST 4 unid.', precio: 931.00 },
+    { nombre: 'Caldos en polvo Alicante Sabor Finas Hierbas 4 unid.', precio: 1040.00 },
+];
+
+      const dineroInvertido = parseFloat(document.getElementById('dineroInvertido').value);
+      const rendimientoAnual = parseFloat(document.getElementById('rendimientoAnual').value);
+      const precioDolar = parseFloat(document.getElementById('precioDolar').value);
+      const rendimientoMensual = rendimientoAnual / 12;
+
+      let montoAcumulado = dineroInvertido;
+      const rendimientoDiario = rendimientoAnual / 365;
+
+      let output = '';
+
+      output += 'El rendimiento mensual es de aproximadamente ' + rendimientoMensual.toFixed(2) + '%.<br>'; 
+
+      output += '<br>';
+
+      for (let dia = 1; dia <= 30; dia++) {
+        const cantidadPorDia = rendimientoDiario * montoAcumulado;
+        let equivalenciaDolar = montoAcumulado / precioDolar;
+
+        montoAcumulado += cantidadPorDia;
+
+        if (dia === 1) {
+          output += `Mañana tendrás ~${montoAcumulado.toFixed(2)} ARS, lo que equivale a ${equivalenciaDolar.toFixed(2)} USD.<br>`;
         }
-    }
-    </script>
+
+        if (dia % 7 === 0) {
+          output += `Después de ${dia} días, tendrás ~${montoAcumulado.toFixed(2)} ARS, lo que equivale a ${equivalenciaDolar.toFixed(2)} USD.<br>`;
+        }
+
+        if (dia === 30) {
+          output += `Después de 1 mes, tendrás ~${montoAcumulado.toFixed(2)} ARS, lo que equivale a ${equivalenciaDolar.toFixed(2)} USD.<br>`;
+        }
+      }
+
+      const productoAleatorio = productos[Math.floor(Math.random() * productos.length)];
+      const cantidadProductos = Math.floor(montoAcumulado / productoAleatorio.precio);
+
+      let ganancia = montoAcumulado - dineroInvertido;
+      let gananciaDolar = ganancia / precioDolar;
+
+      output += '<br>'; 
+
+      if(ganancia > 0 && gananciaDolar > 0) {
+      output += `Considerando los datos, tu ganancia en 1 mes sería de aproximadamente ${ganancia.toFixed(2)} ARS, lo que equivale a ${gananciaDolar.toFixed(2)} USD.`;
+      }
+
+      output += '<br>'; 
+
+      if (cantidadProductos > 0 && dineroInvertido > 3000) {
+      output += `<br>Con ${dineroInvertido.toFixed(2)} ARS, tu dinero actual, puedes comprar aproximadamente ${cantidadProductos} ${productoAleatorio.nombre} a $${productoAleatorio.precio} cada uno.`;
+      }
+
+      output += '<br>';
+      output += '<br>';
+
+      output += 'La información proporcionada es solo una estimación y no debe tomarse como una recomendación de inversión.'
+
+      document.getElementById('result').innerHTML = output;
+    });
+  </script>
 </body>
 </html>
