@@ -3,12 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Calculadora de Intereses Mercado Pago</title>
-  <link rel="stylesheet" href="css/style.css">
+  <script src="https://kit.fontawesome.com/c75c589dab.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <form id="investmentForm">
+    <style>
+      input[type=number] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+      }
+    </style>
+
+    <h1>Calculadora de Intereses Mercado Pago</h1>
+    <hr style="border-top: 1px dashed #8c8b8b;">
+
+    <style>
+      label, input[type=number] {
+        font-family: 'Courier New', Courier, monospace;
+      }
+    </style>
+
     <label for="dineroInvertido">ARS Invertidos:</label>
-    <input type="number" id="dineroInvertido" name="dineroInvertido" step="any" required>
+    <input type="number" id="dineroInvertido" name="dineroInvertido" step="any" required placeholder="2312.89">
 
     <br>
 
@@ -17,17 +38,46 @@
 
     <br>
 
+    <i class="fab fa-github"></i>
+
     <label for="precioDolar">Precio USD:</label>
     <input type="number" id="precioDolar" name="precioDolar" value="1215" step="any" required>
 
+    <br>
+
+    <label for="inflacion">Inflación mensual (%):</label>
+    <input type="number" id="inflacion" name="inflacion" value="25" step="any">
     <br><br>
 
-    <input type="submit" value="Calculate">
-  </form>
+    <input type="submit" value="Calcular" style="
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 12px;
+    ">
+  </form> 
+
+  <div id="result" class="output-text"></div>
 
   <br>
 
   <div id="result"></div>
+
+  <i class="fab fa-github"></i>
+
+  <footer>
+      <small>La información proporcionada es solo una estimación y no debe tomarse como una recomendación de inversión. </small><br>
+      <p style="color: grey;">
+        Copyright (C) 2024 pyoneerC - All Rights Reserved.
+      </p>
+    </footer>
 
   <script>
     document.getElementById('investmentForm').addEventListener('submit', function(event) {
@@ -72,11 +122,15 @@
     { nombre: 'Caldos en polvo Alicante Sabor Gallina ST 4 unid.', precio: 931.00 },
     { nombre: 'Caldos en polvo Alicante Sabor Verdura ST 4 unid.', precio: 931.00 },
     { nombre: 'Caldos en polvo Alicante Sabor Finas Hierbas 4 unid.', precio: 1040.00 },
+    { nombre: 'Litro de Super', precio: 900},
+    { nombre: 'Agua mineral 2L', precio: 900},
+    { nombre: 'Pan Lactal 315 gr', precio: 1100}
 ];
 
       const dineroInvertido = parseFloat(document.getElementById('dineroInvertido').value);
       const rendimientoAnual = parseFloat(document.getElementById('rendimientoAnual').value);
       const precioDolar = parseFloat(document.getElementById('precioDolar').value);
+      let inflationRate = parseFloat(document.getElementById('inflacion').value);
       const rendimientoMensual = rendimientoAnual / 12;
 
       let montoAcumulado = dineroInvertido;
@@ -84,7 +138,9 @@
 
       let output = '';
 
-      output += 'El rendimiento mensual es de aproximadamente ' + rendimientoMensual.toFixed(2) + '%.<br>'; 
+      output += 'El rendimiento diario es ~' + rendimientoDiario.toFixed(3) + '%.<br>';
+      output += 'El redimiento semanal es ~' + (rendimientoDiario * 7).toFixed(2) + '%.<br>';
+      output += '<u>El rendimiento mensual es ~' + rendimientoMensual.toFixed(2) + '%.</u><br>'; 
 
       output += '<br>';
 
@@ -116,8 +172,8 @@
       output += '<br>'; 
 
       if(ganancia > 0 && gananciaDolar > 0) {
-      output += `Considerando los datos y que todas las variables se mantengan estables, tu ganancia en 1 mes sería de aproximadamente ${ganancia.toFixed(2)} ARS, lo que equivale a ${gananciaDolar.toFixed(2)} USD.`;
-      }
+      output += `Considerando los datos y que todas las variables se mantengan estables, <span style="color:green;">la ganancia en 30 días sería ~${ganancia.toFixed(2)} ARS</span>, lo que equivale a ${gananciaDolar.toFixed(2)} USD.`;      
+      } 
 
       output += '<br>'; 
 
@@ -126,12 +182,16 @@
       }
 
       output += '<br>';
-      output += '<br>';
 
-      output += 'La información proporcionada es solo una estimación y no debe tomarse como una recomendación de inversión.'
+      let futureValue = dineroInvertido * (1 + (inflationRate / 100));
+      output += `En un mes, ${dineroInvertido} ARS serán ${futureValue.toFixed(2)} ARS.`;
+
+      output += '<br>';
+      output += '<br>';
 
       document.getElementById('result').innerHTML = output;
     });
   </script>
+  <hr style="border-top: 1px dashed #8c8b8b;">
 </body>
 </html>
