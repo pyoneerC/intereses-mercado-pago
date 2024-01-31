@@ -1,174 +1,356 @@
 <!DOCTYPE html>
 <!-- maybe chart? plot-->
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Calculadora de Intereses Mercado Pago</title>
-  <script src="https://kit.fontawesome.com/c75c589dab.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <form id="investmentForm">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora de Intereses Mercado Pago</title>
+    <script
+      src="https://kit.fontawesome.com/c75c589dab.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-    <h1>Calculadora de Intereses de Mercado Pago</h1>
-    <hr style="border-top: 1px dashed #8c8b8b;">
+  <body>
+    <form id="investmentForm">
+      <h1>Calculadora de Intereses de Mercado Pago</h1>
+      <hr style="border-top: 1px dashed #8c8b8b" />
 
-    <label for="dineroInvertido">ARS Invertidos:</label>
-    <input type="number" id="dineroInvertido" name="dineroInvertido" step="any" required placeholder="2312.89">
+      <label for="dineroInvertido">ARS Invertidos:</label>
+      <input
+        type="number"
+        id="dineroInvertido"
+        name="dineroInvertido"
+        step="any"
+        required
+        placeholder="2312.89"
+      />
 
-    <br>
+      <br />
 
-    <label for="rendimientoAnual">Rendimiento Anual (%):</label>
-    <input type="number" id="rendimientoAnual" name="rendimientoAnual" value="0.81" step="any" required>
+      <label for="rendimientoAnual">Rendimiento Anual (%):</label>
+      <input
+        type="number"
+        id="rendimientoAnual"
+        name="rendimientoAnual"
+        value="0.81"
+        step="any"
+        required
+      />
 
-    <br>
+      <br />
 
-    <a href="https://github.com/pyoneerC/intereses-mercado-pago" target="_blank" class="github-icon">
-      <i class="fab fa-github"></i>
-    </a>
+      <a
+        href="https://github.com/pyoneerC/intereses-mercado-pago"
+        target="_blank"
+        class="github-icon"
+      >
+        <i class="fab fa-github"></i>
+      </a>
 
-    <a href="https://github.com/pyoneerC/intereses-mercado-pago/issues/new" target="_blank" class="bug-icon">
-      <i class="fa-solid fa-bug"></i>
-    </a>
+      <a
+        href="https://github.com/pyoneerC/intereses-mercado-pago/issues/new"
+        target="_blank"
+        class="bug-icon"
+      >
+        <i class="fa-solid fa-bug"></i>
+      </a>
 
-    <label for="precioDolar">Precio USD:</label>
-    <input type="number" id="precioDolar" name="precioDolar" value="1215" step="any" required>
+      <label for="precioDolar">Precio USD:</label>
+      <input
+        type="number"
+        id="precioDolar"
+        name="precioDolar"
+        value="1215"
+        step="any"
+        required
+      />
 
-    <br>
+      <br />
 
-    <label for="inflacion">Inflación mensual (%):</label>
-    <input type="number" id="inflacion" name="inflacion" value="25" step="any">
-    <br><br>
+      <label for="inflacion">Inflación mensual (%):</label>
+      <input
+        type="number"
+        id="inflacion"
+        name="inflacion"
+        value="25"
+        step="any"
+      />
+      <br /><br />
 
-    <input type="submit" value="Calcular">
-  </form> 
+      <input type="submit" value="Calcular" />
+    </form>
 
-  <div id="result" class="output-text"></div>
+    <div id="result" class="output-text"></div>
 
-  <br>
+    <br />
 
-  <div id="result"></div>
+    <div id="result"></div>
 
-  <footer>
-      <small>La información proporcionada es solo una estimación y no debe tomarse como una recomendación de inversión. </small><br>
-      <p style="color: grey;">
+    <footer>
+      <small
+        >La información proporcionada es solo una estimación y no debe tomarse
+        como una recomendación de inversión. </small
+      ><br />
+      <p style="color: grey">
         Copyright (C) 2024 pyoneerC - All Rights Reserved.
       </p>
     </footer>
 
-  <script>
-    document.getElementById('investmentForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+    <script>
+      document
+        .getElementById("investmentForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
 
-    const productos = [
-    { nombre: 'Leche 1L', precio: 814 },
-    { nombre: 'Coca de dos litros y medio', precio: 2423.47 },
-    { nombre: 'Bolsas de basura x 30', precio: 644.00 },
-    { nombre: 'Nueces peladas 100 grs', precio: 1010.00 },
-    { nombre: 'Discos para empanadas sin TACC 12 unid.', precio: 1143.00 },
-    { nombre: 'Pan 650 grs', precio: 1995.00 },
-    { nombre: 'Pan rallado sin gluten 500 grs', precio: 1270.00 },
-    { nombre: 'Biscuits 150 grs', precio: 1090.00 },
-    { nombre: 'Pasta frola.', precio: 1450.00 },
-    { nombre: 'Alfajor de maizena 6 unidades.', precio: 1815.00 },
-    { nombre: 'Pañal Desc Premium Care PCare 34 unidades.', precio: 21880.00 },
-    { nombre: 'Alimento para gatos (Pescado 1000 grs)', precio: 2082.00 },
-    { nombre: 'Alimento para gatos (Mix 10 KG)', precio: 17017.00 },
-    { nombre: 'Alimento para gatos (Carne, Pescado y Arroz 1000 grs)', precio: 1797.00 },
-    { nombre: 'Alimento para perros (Pedigree Adulto CPC E2 1500 grs)', precio: 3025.00 },
-    { nombre: 'Alimento para mascotas (Carne, Carne, Cereales y Arroz 8 KG)', precio: 8872.00 },
-    { nombre: 'Alimento para gatos (Pescado prebiótico 3 KG)', precio: 5377.00 },
-    { nombre: 'Repuesto Escolar Rivadavia CD 48 hojas', precio: 1915.00 },
-    { nombre: 'Bolígrafo BIC Cristal Dura+ Negro 3 unid.', precio: 1909.00 },
-    { nombre: 'Lápiz grafito BIC Evolution con goma 4 unid.', precio: 2138.00 },
-    { nombre: 'Budín Arcor sin frutas 215 grs', precio: 1240.00 },
-    { nombre: 'Budín France con frutas 150 grs', precio: 501.00 },
-    { nombre: 'Budín celiaco Smams Vainilla 250 grs', precio: 2980.00 },
-    { nombre: 'Budín celiaco Smams Vainilla con chip 200 grs', precio: 2980.00 },
-    { nombre: 'Budín celiaco Smams Marmolado 250 grs', precio: 2980.00 },
-    { nombre: 'Budín marmolado 1 unid.', precio: 1270.00 },
-    { nombre: 'Arroz L. Fino Noble 5/0 500 grs', precio: 1100.00 },
-    { nombre: 'Arroz L. Fino Noble 5/0 1000 grs', precio: 2076.00 },
-    { nombre: 'Arroz L. Fino Tio Carlos 00000 500 grs', precio: 813.00 },
-    { nombre: 'Arroz Parb. Lucchetti bolsa 1000 grs', precio: 3163.00 },
-    { nombre: 'Arroz Fortuna Tio Carlos 00000 500 grs', precio: 1283.00 },
-    { nombre: 'Caldos en polvo Alicante Sabor 4 Quesos 4 unid.', precio: 1040.00 },
-    { nombre: 'Caldos en polvo Alicante Sabor Crema/Verde 4 unid.', precio: 1040.00 },
-    { nombre: 'Caldos en polvo Alicante Sabor Carne ST 4 unid.', precio: 931.00 },
-    { nombre: 'Caldos en polvo Alicante Sabor Verdura R/S 4 unid.', precio: 931.00 },
-    { nombre: 'Caldos en polvo Alicante Sabor Gallina ST 4 unid.', precio: 931.00 },
-    { nombre: 'Caldos en polvo Alicante Sabor Verdura ST 4 unid.', precio: 931.00 },
-    { nombre: 'Caldos en polvo Alicante Sabor Finas Hierbas 4 unid.', precio: 1040.00 },
-    { nombre: 'Litro de Super', precio: 900},
-    { nombre: 'Agua mineral 2L', precio: 900},
-    { nombre: 'Pan Lactal 315 gr', precio: 1100}
-];
+          const productos = [
+            { nombre: "Leche 1L", precio: 814 },
+            { nombre: "Coca de dos litros y medio", precio: 2423.47 },
+            { nombre: "Bolsas de basura x 30", precio: 644.0 },
+            { nombre: "Nueces peladas 100 grs", precio: 1010.0 },
+            {
+              nombre: "Discos para empanadas sin TACC 12 unid.",
+              precio: 1143.0,
+            },
+            { nombre: "Pan 650 grs", precio: 1995.0 },
+            { nombre: "Pan rallado sin gluten 500 grs", precio: 1270.0 },
+            { nombre: "Biscuits 150 grs", precio: 1090.0 },
+            { nombre: "Pasta frola.", precio: 1450.0 },
+            { nombre: "Alfajor de maizena 6 unidades.", precio: 1815.0 },
+            {
+              nombre: "Pañal Desc Premium Care PCare 34 unidades.",
+              precio: 21880.0,
+            },
+            {
+              nombre: "Alimento para gatos (Pescado 1000 grs)",
+              precio: 2082.0,
+            },
+            { nombre: "Alimento para gatos (Mix 10 KG)", precio: 17017.0 },
+            {
+              nombre: "Alimento para gatos (Carne, Pescado y Arroz 1000 grs)",
+              precio: 1797.0,
+            },
+            {
+              nombre: "Alimento para perros (Pedigree Adulto CPC E2 1500 grs)",
+              precio: 3025.0,
+            },
+            {
+              nombre:
+                "Alimento para mascotas (Carne, Carne, Cereales y Arroz 8 KG)",
+              precio: 8872.0,
+            },
+            {
+              nombre: "Alimento para gatos (Pescado prebiótico 3 KG)",
+              precio: 5377.0,
+            },
+            {
+              nombre: "Repuesto Escolar Rivadavia CD 48 hojas",
+              precio: 1915.0,
+            },
+            {
+              nombre: "Bolígrafo BIC Cristal Dura+ Negro 3 unid.",
+              precio: 1909.0,
+            },
+            {
+              nombre: "Lápiz grafito BIC Evolution con goma 4 unid.",
+              precio: 2138.0,
+            },
+            { nombre: "Budín Arcor sin frutas 215 grs", precio: 1240.0 },
+            { nombre: "Budín France con frutas 150 grs", precio: 501.0 },
+            { nombre: "Budín celiaco Smams Vainilla 250 grs", precio: 2980.0 },
+            {
+              nombre: "Budín celiaco Smams Vainilla con chip 200 grs",
+              precio: 2980.0,
+            },
+            { nombre: "Budín celiaco Smams Marmolado 250 grs", precio: 2980.0 },
+            { nombre: "Budín marmolado 1 unid.", precio: 1270.0 },
+            { nombre: "Arroz L. Fino Noble 5/0 500 grs", precio: 1100.0 },
+            { nombre: "Arroz L. Fino Noble 5/0 1000 grs", precio: 2076.0 },
+            { nombre: "Arroz L. Fino Tio Carlos 00000 500 grs", precio: 813.0 },
+            { nombre: "Arroz Parb. Lucchetti bolsa 1000 grs", precio: 3163.0 },
+            {
+              nombre: "Arroz Fortuna Tio Carlos 00000 500 grs",
+              precio: 1283.0,
+            },
+            {
+              nombre: "Caldos en polvo Alicante Sabor 4 Quesos 4 unid.",
+              precio: 1040.0,
+            },
+            {
+              nombre: "Caldos en polvo Alicante Sabor Crema/Verde 4 unid.",
+              precio: 1040.0,
+            },
+            {
+              nombre: "Caldos en polvo Alicante Sabor Carne ST 4 unid.",
+              precio: 931.0,
+            },
+            {
+              nombre: "Caldos en polvo Alicante Sabor Verdura R/S 4 unid.",
+              precio: 931.0,
+            },
+            {
+              nombre: "Caldos en polvo Alicante Sabor Gallina ST 4 unid.",
+              precio: 931.0,
+            },
+            {
+              nombre: "Caldos en polvo Alicante Sabor Verdura ST 4 unid.",
+              precio: 931.0,
+            },
+            {
+              nombre: "Caldos en polvo Alicante Sabor Finas Hierbas 4 unid.",
+              precio: 1040.0,
+            },
+            { nombre: "Litro de Super", precio: 900 },
+            { nombre: "Agua mineral 2L", precio: 900 },
+            { nombre: "Pan Lactal 315 gr", precio: 1100 },
+          ];
 
-      const dineroInvertido = parseFloat(document.getElementById('dineroInvertido').value);
-      const rendimientoAnual = parseFloat(document.getElementById('rendimientoAnual').value);
-      const precioDolar = parseFloat(document.getElementById('precioDolar').value);
-      let inflationRate = parseFloat(document.getElementById('inflacion').value);
-      const rendimientoMensual = rendimientoAnual / 12;
+          const dineroInvertido = parseFloat(
+            document.getElementById("dineroInvertido").value
+          );
+          const rendimientoAnual = parseFloat(
+            document.getElementById("rendimientoAnual").value
+          );
+          const precioDolar = parseFloat(
+            document.getElementById("precioDolar").value
+          );
+          let inflationRate = parseFloat(
+            document.getElementById("inflacion").value
+          );
 
-      let montoAcumulado = dineroInvertido;
-      const rendimientoDiario = rendimientoAnual / 365;
+          const rendimientoDiario = rendimientoAnual / 365;
+          const rendimientoSemanal = rendimientoAnual / 52;
+          const rendimientoMensual = rendimientoAnual / 12;
 
-      let output = '';
+          let montoAcumulado = dineroInvertido;
 
-      output += 'El rendimiento diario es ~' + rendimientoDiario.toFixed(3) + '%.<br>';
-      output += 'El redimiento semanal es ~' + (rendimientoDiario * 7).toFixed(2) + '%.<br>';
-      output += '<u>El rendimiento mensual es ~' + rendimientoMensual.toFixed(2) + '%.</u><br>'; 
+          let output = "";
 
-      output += '<br>';
+          output +=
+            "El rendimiento diario es ~" +
+            rendimientoDiario.toFixed(3) +
+            "%.<br>";
+          output +=
+            "El redimiento semanal es ~" +
+            rendimientoSemanal.toFixed(2) +
+            "%.<br>";
+          output +=
+            "<u>El rendimiento mensual es ~" +
+            rendimientoMensual.toFixed(2) +
+            "%.</u><br>";
 
-      for (let dia = 1; dia <= 30; dia++) {
-        const cantidadPorDia = rendimientoDiario * montoAcumulado;
-        let equivalenciaDolar = montoAcumulado / precioDolar;
+          output += "<br>";
 
-        montoAcumulado += cantidadPorDia;
+          for (let dia = 1; dia <= 30; dia++) {
+            const cantidadPorDia = rendimientoDiario * montoAcumulado;
+            let equivalenciaDolar = montoAcumulado / precioDolar;
 
-        if (dia === 1) {
-          output += `Mañana tendrás ~${montoAcumulado.toFixed(2)} ARS, lo que equivale a ${equivalenciaDolar.toFixed(2)} USD.<br>`;
-        }
+            montoAcumulado += cantidadPorDia;
 
-        if (dia % 7 === 0) {
-          output += `Después de ${dia} días, tendrás ~${montoAcumulado.toFixed(2)} ARS, lo que equivale a ${equivalenciaDolar.toFixed(2)} USD.<br>`;
-        }
+            if (dia === 1) {
+              output += `Mañana tendrás ~${montoAcumulado.toFixed(
+                2
+              )} ARS, lo que equivale a ${equivalenciaDolar.toFixed(
+                2
+              )} USD.<br>`;
+            }
 
-        if (dia === 30) {
-          output += `Después de 1 mes, tendrás ~${montoAcumulado.toFixed(2)} ARS, lo que equivale a ${equivalenciaDolar.toFixed(2)} USD.<br>`;
-        }
-      }
+            if (dia % 7 === 0) {
+              output += `Después de ${dia} días, tendrás ~${montoAcumulado.toFixed(
+                2
+              )} ARS, lo que equivale a ${equivalenciaDolar.toFixed(
+                2
+              )} USD.<br>`;
+            }
 
-      const productoAleatorio = productos[Math.floor(Math.random() * productos.length)];
-      const cantidadProductos = Math.floor(montoAcumulado / productoAleatorio.precio);
+            if (dia === 30) {
+              output += `Después de 1 mes, tendrás ~${montoAcumulado.toFixed(
+                2
+              )} ARS, lo que equivale a ${equivalenciaDolar.toFixed(
+                2
+              )} USD.<br>`;
+            }
+          }
 
-      let ganancia = montoAcumulado - dineroInvertido;
-      let gananciaDolar = ganancia / precioDolar;
+          output +=
+            "Después de 1 año, tendrás ~" +
+            (dineroInvertido * (1 + rendimientoAnual)).toFixed(2) +
+            " ARS, lo que equivale a " +
+            ((dineroInvertido * (1 + rendimientoAnual)) / precioDolar).toFixed(
+              2
+            ) +
+            " USD.<br>";
 
-      output += '<br>'; 
+          const productoAleatorio =
+            productos[Math.floor(Math.random() * productos.length)];
+          const cantidadProductos = Math.floor(
+            montoAcumulado / productoAleatorio.precio
+          );
 
-      if(ganancia > 0 && gananciaDolar > 0) {
-      output += `Considerando los datos y que todas las variables se mantengan estables, <span style="color:green;">la ganancia en 30 días sería ~${ganancia.toFixed(2)} ARS</span>, lo que equivale a ${gananciaDolar.toFixed(2)} USD.`;      
-      } 
+          let ganancia = montoAcumulado - dineroInvertido;
+          let gananciaDolar = ganancia / precioDolar;
 
-      output += '<br>'; 
+          output += "<br>";
 
-      if (cantidadProductos > 0 && dineroInvertido > 3000) {
-      output += `<br>Con ${dineroInvertido.toFixed(2)} ARS, tu dinero actual, puedes comprar aproximadamente ${cantidadProductos} ${productoAleatorio.nombre} a $${productoAleatorio.precio} cada uno.`;
-      }
+          const gananciaDiaria =
+            dineroInvertido * (1 + rendimientoDiario) - dineroInvertido;
+          const gananciaSemanal =
+            dineroInvertido * (1 + rendimientoSemanal) - dineroInvertido;
+          const gananciaMensual =
+            dineroInvertido * (1 + rendimientoMensual) - dineroInvertido;
+          const gananciaAnual =
+            dineroInvertido * (1 + rendimientoAnual) - dineroInvertido;
 
-      output += '<br>';
+          const gananciaDiariaDolar = gananciaDiaria / precioDolar;
+          const gananciaSemanalDolar = gananciaSemanal / precioDolar;
+          const gananciaMensualDolar = gananciaMensual / precioDolar;
+          const gananciaAnualDolar = gananciaAnual / precioDolar;
 
-      let futureValue = dineroInvertido * (1 + (inflationRate / 100));
-      output += `En un mes, ${dineroInvertido} ARS serán ${futureValue.toFixed(2)} ARS.`;
+          if (ganancia > 0 && gananciaDolar > 0) {
+            output += `<span style="color:green;">La ganancia en diaria sería ~${gananciaDiaria.toFixed(
+              2
+            )} ARS</span>, lo que equivale a ${gananciaDiariaDolar.toFixed(
+              2
+            )} USD.<br>`;
+            output += `<span style="color:green;">La ganancia en 1 semana sería ~${gananciaSemanal.toFixed(
+              2
+            )} ARS</span>, lo que equivale a ${gananciaSemanalDolar.toFixed(
+              2
+            )} USD.<br>`;
+            output += `<span style="color:green;">La ganancia en 1 mes sería ~${gananciaMensual.toFixed(
+              2
+            )} ARS</span>, lo que equivale a ${gananciaMensualDolar.toFixed(
+              2
+            )} USD.<br>`;
+            output += `<span style="color:green;">La ganancia en 1 año sería ~${gananciaAnual.toFixed(
+              2
+            )} ARS</span>, lo que equivale a ${gananciaAnualDolar.toFixed(
+              2
+            )} USD.<br>`;
+          }
 
-      output += '<br>';
-      output += '<br>';
+          if (cantidadProductos > 0 && dineroInvertido > 3000) {
+            output += `<br>Con ${dineroInvertido.toFixed(
+              2
+            )} ARS, tu dinero actual, puedes comprar aproximadamente ${cantidadProductos} ${
+              productoAleatorio.nombre
+            } a $${productoAleatorio.precio} cada uno.`;
+          }
 
-      document.getElementById('result').innerHTML = output;
-    });
-  </script>
-  <hr style="border-top: 1px dashed #8c8b8b;">
-</body>
+          output += "<br>";
+          output += "<br>";
+
+          let futureValue = dineroInvertido * (1 + inflationRate / 100);
+          output += `En un mes, ${dineroInvertido.toFixed(
+            2
+          )} ARS serán ${futureValue.toFixed(2)} ARS.<br>`;
+
+          output += "<br>";
+          output += "<br>";
+
+          document.getElementById("result").innerHTML = output;
+        });
+    </script>
+    <hr style="border-top: 1px dashed #8c8b8b" />
+  </body>
 </html>
