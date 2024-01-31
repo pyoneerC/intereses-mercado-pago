@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 5;
   padding: 5;
-  background-color: #f4f4f4;
+  background-color: #8400ff;
   color: #333; 
   line-height: 1.6; 
 }
@@ -17,15 +17,16 @@ footer {
 
 h1 {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: #4CAF50; /* Green */
+  color: #ffffff;
+  text-shadow: #000000 inset 2px 2px 4px;
   text-align: center;
-  font-size: 2.5em; /* 40px */
+  font-size: 2.5em; 
   text-shadow: 2px 2px 4px #000000;
 }
 
 .output-text {
   font-size: 18px; 
-  color: #666; 
+  color: #333; 
   font-family: 'Courier New', Courier, monospace;
 }
 
@@ -68,4 +69,33 @@ input[type=submit] {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 12px;
+}
+
+html, body {
+  width: 100%;
+  height:100%;
+}
+
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+/*@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}*/
+
+.copy {
+  background: -webkit-linear-gradient(#000000, #abbee2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

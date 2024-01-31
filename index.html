@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Calculadora de Intereses Mercado Pago</title>
+    <title>Calculadora de Rendimientos Mercado Pago</title>
     <script
       src="https://kit.fontawesome.com/c75c589dab.js"
       crossorigin="anonymous"
@@ -87,15 +87,6 @@
 
       <br />
 
-      <label for="inflacion">Inflación mensual (%):</label>
-      <input
-        type="number"
-        id="inflacion"
-        name="inflacion"
-        value="25"
-        step="any"
-      />
-      <br /><br />
 
       <input type="submit" value="Calcular" />
     </form>
@@ -111,7 +102,12 @@
         >La información proporcionada es solo una estimación y no debe tomarse
         como una recomendación de inversión. </small
       ><br />
-      <p style="color: grey">
+      <p>
+        <small>
+          Nótese que todo el dinero se reinvierte automáticamente, luego de sumarle el rendimiento diario.
+        </small>
+      </p>
+      <p class="copy">
         Copyright (C) 2024 pyoneerC - All Rights Reserved.
       </p>
     </footer>
@@ -233,9 +229,6 @@
           const precioDolar = parseFloat(
             document.getElementById("precioDolar").value
           );
-          let inflationRate = parseFloat(
-            document.getElementById("inflacion").value
-          );
 
           const rendimientoDiario = rendimientoAnual / 365;
           const rendimientoSemanal = rendimientoAnual / 52;
@@ -262,10 +255,8 @@
 
           for (let dia = 1; dia <= 365; dia++) {
             
-            montoAcumulado = montoAcumulado * (1 + rendimientoDiario);
+            montoAcumulado += montoAcumulado * (rendimientoDiario);
             let equivalenciaDolar = montoAcumulado / precioDolar;
-            
-            //TODO: REINVERTIR DIARIAMENTE CON EL RENDIMIENTO DIARIO, ACOMULATIVO.
 
             if (dia === 1) {
               output += `Mañana tendrás ~${montoAcumulado.toFixed(
@@ -322,19 +313,15 @@
 
           output += "<br>";
 
-          const gananciaDiaria =
-            dineroInvertido * (1 + rendimientoDiario) - dineroInvertido;
-          const gananciaSemanal =
-            dineroInvertido * (1 + rendimientoSemanal) - dineroInvertido;
-          const gananciaMensual =
-            dineroInvertido * (1 + rendimientoMensual) - dineroInvertido;
-          const gananciaAnual =
-            dineroInvertido * (1 + rendimientoAnual) - dineroInvertido;
+          const gananciaDiaria =   dineroInvertido * rendimientoDiario;
+          const gananciaSemanal =  dineroInvertido * rendimientoSemanal;
+          const gananciaMensual =  dineroInvertido * rendimientoMensual;
+          const gananciaAnual =    dineroInvertido * rendimientoAnual;
 
-          const gananciaDiariaDolar = gananciaDiaria / precioDolar;
-          const gananciaSemanalDolar = gananciaSemanal / precioDolar;
-          const gananciaMensualDolar = gananciaMensual / precioDolar;
-          const gananciaAnualDolar = gananciaAnual / precioDolar;
+          const gananciaDiariaDolar =   gananciaDiaria / precioDolar;
+          const gananciaSemanalDolar =  gananciaSemanal / precioDolar;
+          const gananciaMensualDolar =  gananciaMensual / precioDolar;
+          const gananciaAnualDolar =    gananciaAnual / precioDolar;
 
           if (ganancia > 0 && gananciaDolar > 0) {
             output += `<span style="color:green;">La ganancia diaria sería ~${gananciaDiaria.toFixed(
@@ -366,17 +353,6 @@
               productoAleatorio.nombre
             } a $${productoAleatorio.precio} cada uno.`;
           }
-
-          output += "<br>";
-          output += "<br>";
-
-          let futureValue = dineroInvertido * (1 + inflationRate / 100);
-          output += `En un mes, ${dineroInvertido.toFixed(
-            2
-          )} ARS serán ${futureValue.toFixed(2)} ARS.<br>`;
-
-          output += "<br>";
-          output += "<br>";
 
           document.getElementById("result").innerHTML = output;
         });
