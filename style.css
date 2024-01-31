@@ -29,3 +29,43 @@ h1 {
   font-family: 'Courier New', Courier, monospace;
 }
 
+.github-icon, .bug-icon {
+  font-size: 3em;
+  position: absolute; 
+  top: 10px; 
+}
+
+.github-icon {
+  right: 70px; 
+}
+
+.bug-icon {
+  right: 10px; 
+}
+
+label, input[type=number] {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+input[type=number] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type=submit] {
+  background-color: #4CAF50; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
