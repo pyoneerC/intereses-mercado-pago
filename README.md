@@ -4,7 +4,7 @@ Este proyecto es una calculadora web sencilla que te permite calcular los intere
 
 ## Características
 
-- Calcula los retornos diarios, semanales y mensuales de tu inversión.
+- Calcula los retornos diarios, semanales, mensuales y anuales de tu inversión.
 - Compara tus retornos tanto en ARS como en USD.
 - Obtén una estimación de cuánto podrías comprar con los retornos de tu inversión.
 - Considera el impacto de la inflación en tu inversión.
