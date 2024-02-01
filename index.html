@@ -32,7 +32,7 @@
 
   <body>
     <form id="investmentForm">
-      <h1>Calculadora de Rendimientos Mercado Pago</h1>
+      <h1>Calculadora de Rendimientos Mercado Pago (interés compuesto)</h1>
       <hr style="border-top: 1px dashed #8c8b8b" />
 
       <label for="dineroInvertido">ARS Invertidos:</label>
@@ -87,8 +87,7 @@
 
       <br />
 
-
-      <input type="submit" value="Calcular" class="calcular"/>
+      <input type="submit" value="Calcular" class="calcular" />
     </form>
 
     <div id="result" class="output-text"></div>
@@ -98,12 +97,7 @@
     <div id="result"></div>
 
     <footer class="footer">
-      <small>
-        Nótese que todo el dinero se reinvierte automáticamente, luego de sumarle el rendimiento diario.
-      </small>
-      <p class="copy">
-        Copyright (C) 2024 pyoneerC - All Rights Reserved.
-      </p>
+      <p class="copy">Copyright (C) 2024 pyoneerC - All Rights Reserved.</p>
     </footer>
 
     <script>
@@ -124,7 +118,7 @@
             { nombre: "Pan 650 grs", precio: 1995.0 },
             { nombre: "Pan rallado sin gluten 500 grs", precio: 1270.0 },
             { nombre: "Biscuits 150 grs", precio: 1090.0 },
-            { nombre: "Pasta frola.", precio: 1450.0 },
+            { nombre: "Pasta frola", precio: 1450.0 },
             { nombre: "Alfajor de maizena 6 unidades.", precio: 1815.0 },
             {
               nombre: "Pañal Desc Premium Care PCare 34 unidades.",
@@ -248,8 +242,7 @@
           output += "<br>";
 
           for (let dia = 1; dia <= 365; dia++) {
-            
-            montoAcumulado += montoAcumulado * (rendimientoDiario);
+            montoAcumulado += montoAcumulado * rendimientoDiario;
             let equivalenciaDolar = montoAcumulado / precioDolar;
 
             if (dia === 1) {
@@ -283,18 +276,15 @@
                 2
               )} USD.<br>`;
             }
-          
+
             if (dia === 365) {
-          output +=
-            "Después de 1 año, tendrás ~" +
-            (montoAcumulado * (1 + rendimientoAnual)).toFixed(2) +
-            " ARS, lo que equivale a " +
-            ((montoAcumulado * (1 + rendimientoAnual)) / precioDolar).toFixed(
-              2
-            ) +
-            " USD.<br>";
+              output += `Después de 1 año, tendrás ~${montoAcumulado.toFixed(
+                2
+              )} ARS, lo que equivale a ${equivalenciaDolar.toFixed(
+                2
+              )} USD.<br>`;
+            }
           }
-        }
 
           const productoAleatorio =
             productos[Math.floor(Math.random() * productos.length)];
@@ -307,15 +297,15 @@
 
           output += "<br>";
 
-          const gananciaDiaria =   dineroInvertido * rendimientoDiario;
-          const gananciaSemanal =  dineroInvertido * rendimientoSemanal;
-          const gananciaMensual =  dineroInvertido * rendimientoMensual;
-          const gananciaAnual =    dineroInvertido * rendimientoAnual;
+          const gananciaDiaria = dineroInvertido * rendimientoDiario;
+          const gananciaSemanal = dineroInvertido * rendimientoSemanal;
+          const gananciaMensual = dineroInvertido * rendimientoMensual;
+          const gananciaAnual = dineroInvertido * rendimientoAnual;
 
-          const gananciaDiariaDolar =   gananciaDiaria / precioDolar;
-          const gananciaSemanalDolar =  gananciaSemanal / precioDolar;
-          const gananciaMensualDolar =  gananciaMensual / precioDolar;
-          const gananciaAnualDolar =    gananciaAnual / precioDolar;
+          const gananciaDiariaDolar = gananciaDiaria / precioDolar;
+          const gananciaSemanalDolar = gananciaSemanal / precioDolar;
+          const gananciaMensualDolar = gananciaMensual / precioDolar;
+          const gananciaAnualDolar = gananciaAnual / precioDolar;
 
           if (ganancia > 0 && gananciaDolar > 0) {
             output += `<span style="color:blue;">La ganancia diaria sería ~${gananciaDiaria.toFixed(
