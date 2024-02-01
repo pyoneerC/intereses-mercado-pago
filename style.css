@@ -89,9 +89,8 @@ input[type=submit] {
 }
 
 .copy {
-  background: -webkit-linear-gradient(#000000, #abbee2);
+  background: black;
   -webkit-background-clip: text;
-  
   -webkit-text-fill-color: transparent;
 }
 
