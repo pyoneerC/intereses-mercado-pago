@@ -2,6 +2,8 @@
 
 Este proyecto es una calculadora web sencilla que te permite calcular los intereses de tus inversiones con Mercado Pago. Está diseñada para ser fácil de usar y proporciona un resultado claro y conciso de tus posibles ganancias.
 
+![rendimientos mercado pago](rmp.png)
+
 ## Características
 
 - Calculá los rendimientos diarios, semanales, mensuales y anuales de tu inversión.
