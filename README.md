@@ -31,6 +31,6 @@ La información proporcionada por esta calculadora es solo una estimación y no 
 
 ## Derechos de autor
 
-Este código es de [dominio público](LICENSE)
+Este código pertenece al [dominio público](LICENSE).
 
 [Probala Hoy!](https://pyoneerc.github.io/rendimientos-mercado-pago/)
