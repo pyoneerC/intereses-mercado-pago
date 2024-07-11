@@ -28,7 +28,8 @@ Damos la bienvenida a las contribuciones a este proyecto. Si tienes una solicitu
 
 ## Descargo de responsabilidad
 
-La información proporcionada por esta calculadora es solo una estimación y no debe tomarse como asesoramiento de inversión. Por favor, consulta con un asesor financiero antes de tomar cualquier decisión de inversión.
+> [!WARNING]  
+> La información proporcionada por esta calculadora es solo una estimación y no debe tomarse como asesoramiento de inversión. Por favor, consulta con un asesor financiero antes de tomar cualquier decisión de inversión.
 
 ## Derechos de autor
 
