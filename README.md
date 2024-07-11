@@ -4,6 +4,7 @@ Este proyecto es una calculadora web sencilla que te permite calcular los intere
 
 ![rendimientos mercado pago](rmp.png)
 
+![demormp.gif](demormp.gif)
 ## Características
 
 - Calculá los rendimientos diarios, semanales, mensuales y anuales de tu inversión.
