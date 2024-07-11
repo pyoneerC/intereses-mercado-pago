@@ -32,9 +32,11 @@
 
   <body>
     <form id="investmentForm">
+      <!-- Título de la calculadora -->
       <h1>Calculadora de Rendimientos Mercado Pago (interés compuesto)</h1>
       <hr style="border-top: 1px dashed #8c8b8b" />
 
+      <!-- Input para el dinero invertido -->
       <label for="dineroInvertido">ARS Invertidos:</label>
       <input
         type="number"
@@ -47,6 +49,7 @@
 
       <br />
 
+      <!-- Input para el rendimiento anual -->
       <label for="rendimientoAnual">Rendimiento Anual (%):</label>
       <input
         type="number"
@@ -75,6 +78,7 @@
         <i class="fa-solid fa-bug"></i>
       </a>
 
+      <!-- Input para el precio del dólar -->
       <label for="precioDolar">Precio USD:</label>
       <input
         type="number"
@@ -97,7 +101,8 @@
     <div id="result"></div>
 
     <footer class="footer">
-      <p class="copy">Copyright (C) 2024 pyoneerC - All Rights Reserved.</p>
+      <!-- Public Domain Notice -->
+      <p class="copy"> This work is public domain.</p>
     </footer>
 
     <script>
@@ -106,6 +111,7 @@
         .addEventListener("submit", function (event) {
           event.preventDefault();
 
+          // Array de productos de supermercado con nombre y precio
           const productos = [
             { nombre: "Leche 1L", precio: 814 },
             { nombre: "Coca de dos litros y medio", precio: 2423.47 },
@@ -208,6 +214,7 @@
             { nombre: "Pan Lactal 315 gr", precio: 1100 },
           ];
 
+          // Variables para obtener los valores de los inputs, parsing.
           const dineroInvertido = parseFloat(
             document.getElementById("dineroInvertido").value
           );
@@ -218,6 +225,7 @@
             document.getElementById("precioDolar").value
           );
 
+          // Variables para calcular el rendimiento diario, semanal y mensual
           const rendimientoDiario = rendimientoAnual / 365;
           const rendimientoSemanal = rendimientoAnual / 52;
           const rendimientoMensual = rendimientoAnual / 12;
@@ -226,6 +234,7 @@
 
           let output = "";
 
+          // Mostrar el rendimiento diario, semanal y mensual en negrita
           output +=
             "El rendimiento diario es ~" +
             rendimientoDiario.toFixed(3) +
@@ -241,6 +250,7 @@
 
           output += "<br>";
 
+          // Calcular el monto acumulado después de 1 día, 1 semana, 2 semanas, 1 mes y 1 año
           for (let dia = 1; dia <= 365; dia++) {
             montoAcumulado += montoAcumulado * rendimientoDiario;
             let equivalenciaDolar = montoAcumulado / precioDolar;
@@ -286,27 +296,32 @@
             }
           }
 
+          // Elegir un producto aleatorio y calcular cuántos se pueden comprar con el monto acumulado
           const productoAleatorio =
             productos[Math.floor(Math.random() * productos.length)];
           const cantidadProductos = Math.floor(
             montoAcumulado / productoAleatorio.precio
           );
 
+          // Calcular la ganancia y su equivalente en USD
           let ganancia = montoAcumulado - dineroInvertido;
           let gananciaDolar = ganancia / precioDolar;
 
           output += "<br>";
 
+          // Variables para calcular la ganancia diaria, semanal, mensual y anual
           const gananciaDiaria = dineroInvertido * rendimientoDiario;
           const gananciaSemanal = dineroInvertido * rendimientoSemanal;
           const gananciaMensual = dineroInvertido * rendimientoMensual;
           const gananciaAnual = dineroInvertido * rendimientoAnual;
 
+          // Variables para calcular la ganancia diaria, semanal, mensual y anual en USD
           const gananciaDiariaDolar = gananciaDiaria / precioDolar;
           const gananciaSemanalDolar = gananciaSemanal / precioDolar;
           const gananciaMensualDolar = gananciaMensual / precioDolar;
           const gananciaAnualDolar = gananciaAnual / precioDolar;
 
+          // Si la ganancia es positiva, mostrarla en azul y su equivalente en USD
           if (ganancia > 0 && gananciaDolar > 0) {
             output += `<span style="color:blue;">La ganancia diaria sería ~${gananciaDiaria.toFixed(
               2
@@ -330,6 +345,7 @@
             )} USD.<br>`;
           }
 
+          // Mostar cuántos productos se pueden comprar con la ganancia
           if (cantidadProductos > 0 && dineroInvertido > 3000) {
             output += `<br>Con ${dineroInvertido.toFixed(
               2
